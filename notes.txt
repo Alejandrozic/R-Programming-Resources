@@ -65,7 +65,7 @@ sum(set$px) # Compute probability
 x <- 0:20
 
 # P(X=x) binomial random variable
-px <- round(dbinom(x, 20, 0.45), 6)
+px <- round(dbinom(x, 20, 0.45), 4)
 
 # P(X<=x) cumulative distribution
 cx <- round(pbinom(x, 20, 0.45), 6)
@@ -73,6 +73,24 @@ cx <- round(pbinom(x, 20, 0.45), 6)
 # Plots
 plot(x, px, type="h", xlab="X", ylab="P(X=x)", main="PDF of X~B(20, 0.45)")
 plot(x, cx, type="h", xlab="X", ylab="P(X<=x)", main="CDF of X~B(20, 0.45)")
+
+# EXTRA
+# Let X~B(15, 0.25)
+# P(X>6) cumulative distribution
+1 - round(pbinom(6, 15, 0.25), 4)
+# P(X>=6) cumulative distribution
+1 - round(pbinom(5, 15, 0.25), 4)
+# P(3<=X<=10) cumulative distribution
+round(pbinom(10,15,0.25)-pbinom(2,15,0.25),4)
+# P(42<=X<=47) cumulative distribution
+round(pbinom(47,15,0.25)-pbinom(41,15,0.25),4)
+# Let X~B(15, 0.75)
+# P(X<10) cumulative distribution
+round(pbinom(9,15,0.75),4)
+# P(X>12)
+round(1 - pbinom(12,n,p),4)
+# P(X<=15) cumulative distribution
+round(pbinom(15,25,0.40),4)
 
 # --------------- NEXT --------------- #
 
@@ -100,7 +118,8 @@ prtc <- pbinom(lwr_endpt, n, p) + (1 - pbinom(upr_endpt, n, p))
 # -- Print
 round(prtc, 2)
 
-# Compute P(X>mu+sd | x>mu)
+# Compute P(X>mean+sd | x>mean)
+# Caclulcate mean+sd and then mean
 ptrd <- (1-pbinom(11, n, p)) / (1-pbinom(9, n, p))
 
 # --------- #
@@ -152,6 +171,14 @@ round(prtc, 4)
 prtd <- pgeom(1, ps) / pgeom(8, ps)
 round(prtd, 4)
 
+# EXTRA
+# Let X~Geom(0.25)
+# P(X=1)
+round(pgeom(0, 0.25), 4)
+# P(3<=X<=7) ==> P(x<=7) - P(x<=2)
+pgeom(6, ps)-pgeom(1, ps)
+
+
 # --------------- NEXT --------------- #
 
 # Let X~Poisson(4.5) where lambda is 4.5
@@ -182,3 +209,12 @@ prtc <- 1 - ppois(mean, 4.5)
 # -- P(X <= mu+2sd)
 mu_2sd <- mean + 2*standard_dev
 prtd <- ppois(mu_2sd, 4.5)
+
+# EXTRA
+# Let X~Poisson(4)
+# P (X<3)
+round(ppois(2, 4), 3)
+# P (X=1)
+round(dpois(1, 4), 4)
+# P (x=4 U x=5)  where "U" is union, which equals P(x=4)+P(x=5)
+round(dpois(4, 4.5) + dpois(5, 4), 4)
