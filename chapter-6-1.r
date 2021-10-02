@@ -205,12 +205,13 @@ factorial(x1)/(factorial(x2)*(factorial(x1-x2)))
 # P(X <= 15)
 prob_of_success <- integrate(Vectorize(f), lower = 0, upper = 15)$value
 
+# The probability that at least X SUCCESS
 f_prob_at_least <- function(x) {
 	nCr(20, x)*(prob_of_success^x)*(1-prob_of_success)^(20-x)
 }
 
 #P(Y=14)
-nCr(20, 14)*(prob_of_success^14)*(1-prob_of_success)^(20-14)
+f_prob_at_least(14)
 
 # P(Y >= 16)
 f_prob_at_least(16)+f_prob_at_least(17)+f_prob_at_least(18)+f_prob_at_least(19)+f_prob_at_least(20)
