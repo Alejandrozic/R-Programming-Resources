@@ -72,3 +72,36 @@ find_upper_bnd<- function(f, interval, target) {
     }, interval)$minimum
 }
 find_upper_bnd(f, interval=c(lower_limit,upper_limit), target=target_density)
+
+# When the Department of Transportation (DOT) repaints the center lines, 
+# edge lines, or no-passing-zone lines on a highway, epoxy paint is sometimes 
+# applied. This paint is more expensive than latex but lasts longer. If this 
+# paint splashes onto a vehicle, it has to be completely sanded off, and that 
+# area of the vehicle has to be repainted. The DOT has warned motorists that 
+# the drying time for this epoxy paint (in minutes) has a uniform distribution 
+# with  a=30  and  b=60.  Suppose epoxy paint is applied to a small section of 
+# center line.
+
+# Provided
+lower_limit <- 30	# a
+upper_limit <- 60	# b
+
+f <- function(x) {(1*x)/((upper_limit-lower_limit)*x)}
+
+# P(X<=45)
+integrate(f, lower = lower_limit, upper = 45)$value
+
+# P(40<=X<=50)
+integrate(f, lower = 40, upper = 50)$value
+
+# P(X>=55)
+ 1 - integrate(f, lower = lower_limit, upper = 55)$value
+
+# P (X >= c) = 0.75
+target_density <- 0.75
+find_lower_bnd<- function(f, interval, target) {
+    optimize(function(x) {
+        abs(integrate(f, x, upper_limit)$value-target)
+    }, interval)$minimum
+}
+find_lower_bnd(f, interval=c(lower_limit,upper_limit), target=target_density)
