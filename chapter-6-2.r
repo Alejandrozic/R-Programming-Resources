@@ -1,6 +1,6 @@
 # --------- #
 # -- 6.2 -- #
-# 
+# The Normal Distribution
 # --------- #
 
 # *************************************************************************************** #
@@ -95,6 +95,11 @@ pnorm(9, mean, sd)-pnorm(8, mean, sd)
 # dollar is white, with mean diameter  3 in.  Suppose the diameter of a sand dollar is normally 
 # distributed with standard  deviation 0.55 in.
 
+# Combinational Foormula
+nCr <- function(x1, x2) {
+	factorial(x1)/(factorial(x2)*(factorial(x1-x2)))
+}
+
 # Units = inches
 mean <- 3
 sd <- 0.55
@@ -104,5 +109,59 @@ sd <- 0.55
 # Find the value x, with P(Height > X) = 0.9
 qnorm(0.9, mean, sd, lower.tail = FALSE)
 
+# Large sand dollars, those with a diameter greater than  4 in,  can be sold to Kelly’s 
+# Shell Shack. What is the probability that a randomly selected sand dollar can be sold?
 # P(X>4)
 pnorm(4, mean, sd, lower.tail = FALSE)
+
+# Suppose  10  sand dollars are selected at random. What is the probability that exactly  
+# 7  of the  10  are between  2.5  and  3.5 in  in diameter?
+# P(2.5 <= X <=3.5)
+probability_at <- function(x, prob_of_succes) {
+	nCr(10, x)*(prob_of_success^x)*(1-prob_of_success)^(10-x)
+}
+prob_of_success <- pnorm(3.5, mean, sd)-pnorm(2.5, mean, sd)
+probability_at(7, prob_of_success)
+
+# What is the probability that a randomly selected sand dollar will have a diameter less than 
+# 2 in.
+# P(X<2)
+1 - pnorm(2, mean, sd, lower.tail = FALSE)
+
+# *************************************************************************************** #
+# Let Z be a stnadrd normal random variable. Given a graph,  find multiple items.
+
+mean <- 0
+sd <- 1
+
+# Find Q1
+# P (Z < Q1) = 0.25
+q1 <- qnorm(0.25, mean, sd)
+
+# Find Q3
+# P (Z < Q3) = 0.25
+q3 <- qnorm(0.75, mean, sd)
+
+# Find IQR
+# Q3-Q1
+iqr <- q3-q1
+
+# Find IFL (Inner Fence Low)
+# Q1 - (3/2)(IQR)
+ifl <- q1 - (3/2)*iqr
+
+# Find IFH (Inner Fence High)
+# Q3 + (3/2)(IQR)
+ifh <- q3 + (3/2)*iqr
+
+# Probability beyond inner fences
+# 2 * P (Z < ifl )
+p_beyond_inner <- 2 * pnorm(ifl, mean, sd)
+
+# OFL Outer Fence Low
+# OFL = Q1 - (3)IQR
+ofl <- q1 - (3)*iqr
+
+# OFH Outer Fence High
+# OFH = Q3 + (3)IQR
+ofh <- q3 + (3)*iqr
